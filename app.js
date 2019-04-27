@@ -1,11 +1,9 @@
 function nyt(search, num_record, start_year, end_year, cb) {
     $.ajax({
         type: "GET",
-        url: "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=election&api-key=XzLFRQAdZMAZxwxWlpdB4EGL4vlFAYQC"
+        url: "https://api.nytimes.com/svc/search/v2/articlesearch.json?q="+search+"&api-key=XzLFRQAdZMAZxwxWlpdB4EGL4vlFAYQC"
     }).then(function(data) {
         var docs = data.response.docs;
-
-
         cb(docs);
     });
 }
@@ -13,8 +11,9 @@ function nyt(search, num_record, start_year, end_year, cb) {
 
 $(function(){
     $("#search").on("click", function(){
-        console.log("click");
-        nyt("", 1, null, null, function(resp){
+        var query = $("#query").val();
+
+        nyt(query, 1, null, null, function(resp){
             console.log(resp)
 
             for( var x =0; x < resp.length; x++ )
